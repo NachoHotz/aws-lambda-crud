@@ -1,0 +1,54 @@
+org: nachohotz
+console: true
+service: aws-lambda-crud
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  iam:
+    role:
+      statements:
+      - Effect: Allow
+        Action:
+          - 'dynamodb:PutItem'
+          - 'dynamodb:Get*'
+          - 'dynamodb:Scan*'
+          - 'dynamodb:UpdateItem'
+          - 'dynamodb:DeleteItem'
+        Resource:
+          - arn:aws:dynamodb:us-east-1:476259045847:table/TaskTable
+
+functions:
+  hello:
+    handler: src/handler.hello
+    events:
+      - httpApi:
+          path: /
+          method: get
+  createTask:
+    handler: src/addTask.addTask
+    events:
+      - httpApi:
+          path: /task
+          method: post
+  getTasks:
+    handler: src/getTasks.getTasks
+    events:
+      - httpApi:
+          path: /task
+          method: get
+
+resources:
+  Resources:
+    TaskTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: TaskTable
+        BillingMode: PAY_PER_REQUEST
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
