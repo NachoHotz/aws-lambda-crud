@@ -14,14 +14,14 @@ const addTask = async (event) => {
       createdAt,
     };
 
+    const params = {
+      TableName: 'TaskTable',
+      Item: newTask,
+    };
+
     const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
-    await dynamoDb
-      .put({
-        TableName: 'TaskTable',
-        Item: newTask,
-      })
-      .promise();
+    await dynamoDb.put(params).promise();
 
     return {
       statusCode: 201,

@@ -4,11 +4,11 @@ const getTasks = async (event) => {
   try {
     const dynamodb = new AWS.DynamoDB.DocumentClient();
 
-    const scanResult = await dynamodb
-      .scan({
-        TableName: 'TaskTable',
-      })
-      .promise();
+    const params = {
+      TableName: 'TaskTable',
+    };
+
+    const scanResult = await dynamodb.scan(params).promise();
 
     const tasks = scanResult.Items;
     const totalTasks = scanResult.Count;
