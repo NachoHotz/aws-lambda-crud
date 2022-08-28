@@ -1,12 +1,12 @@
 const AWS = require('aws-sdk');
 
 const getTasks = async (event) => {
+  const params = {
+    TableName: 'TaskTable',
+  };
+
   try {
     const dynamodb = new AWS.DynamoDB.DocumentClient();
-
-    const params = {
-      TableName: 'TaskTable',
-    };
 
     const scanResult = await dynamodb.scan(params).promise();
 

@@ -1,17 +1,17 @@
 const AWS = require('aws-sdk');
 
 const getTask = async (event) => {
+  const { id } = event.pathParameters;
+
+  const params = {
+    TableName: 'TaskTable',
+    Key: {
+      id,
+    },
+  };
+
   try {
-    const { id } = event.pathParameters;
-
     const dynamoDb = new AWS.DynamoDB.DocumentClient();
-
-    const params = {
-      TableName: 'TaskTable',
-      Key: {
-        id,
-      },
-    };
 
     const result = await dynamoDb.get(params).promise();
 
