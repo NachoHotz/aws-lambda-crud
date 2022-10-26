@@ -1,5 +1,3 @@
-org: nachohotz
-console: true
 service: aws-lambda-crud
 frameworkVersion: '3'
 
