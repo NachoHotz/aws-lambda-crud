@@ -1,4 +1,5 @@
 service: aws-lambda-crud
+org: nachohotz
 frameworkVersion: '3'
 
 provider:
